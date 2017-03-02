@@ -2,6 +2,8 @@
 
 namespace SBTechTest\Endpoint;
 
+use SBTechTest\Database;
+
 class Pundit_List_Endpoint {
 
 	protected $root_directory;
@@ -12,8 +14,9 @@ class Pundit_List_Endpoint {
 	}
 
 	public function run() {
-		$data =  file_get_contents( $this->root_directory . '/pundits.json' );
-		$this->data = json_decode( $data );
+		$db = new Database($this->root_directory);
+		$db->fetchAll('pundits');
+		$this->data = $db->get_last_result();
 	}
 
 	public function get_response() {
