@@ -78,4 +78,8 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase{
 		$pundit = $this->db->get_last_result();
 		$this->assertNull($pundit);
 	}
+
+	public function tearDown() {
+		$this->db->reset();
+	}
 }

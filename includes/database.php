@@ -36,6 +36,8 @@ class Database {
 
 	public function update( $table, $id, $update_data ) {
 
+		// cleanse the post data.
+
 		$this->fetch($table, $id);
 		$previous_record = $this->get_last_result();
 

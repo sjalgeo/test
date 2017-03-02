@@ -13,6 +13,7 @@ class API_Server {
 	public function __construct( $request_uri, $root_directory ) {
 		$this->request_uri = $request_uri;
 		$this->root_directory = $root_directory;
+		$this->db = new Database( $this->root_directory );
 
 		$this->match_path();
 	}
@@ -27,11 +28,23 @@ class API_Server {
 	}
 
 	protected function pundits_list() {
-		$this->response = array('pundit list');
+		$this->db->fetchAll('pundits');
+		$this->response = $this->db->get_last_result();
+	}
 
-		$pundits = new Pundit_List_Endpoint( $this->root_directory );
-		$pundits->run();
-		$this->response = $pundits->get_response();
+	protected function pundits_delete() {
+
+		// do some safety shit.
+		$id = $_POST['id'];
+
+		$this->db->delete('pundits', $id);
+	}
+
+	protected function pundits_update() {
+		// do some safety shit.
+		$id = $_POST['id'];
+		$data = $_POST['data'];
+		$this->db->update('pundits', $id, $data);
 	}
 
 	/**
@@ -48,7 +61,16 @@ class API_Server {
 	public function run() {
 
 		switch ( $this->endpoint ) {
-			case 'pundits':
+			case 'list':
+				$this->pundits_list();
+				break;
+			case 'update':
+				$this->pundits_update();
+				break;
+			case 'delete':
+				$this->pundits_delete();
+				break;
+			case 'create':
 				$this->pundits_list();
 				break;
 			default:
