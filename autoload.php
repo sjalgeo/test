@@ -66,4 +66,5 @@ class SB_Test_Autoloader {
 		}
 	}
 }
+
 spl_autoload_register( array( 'SB_Test_Autoloader', 'autoload_function' ) );
