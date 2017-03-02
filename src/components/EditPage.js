@@ -12,6 +12,13 @@ class EditPage extends Component {
 	}
 }
 
+// let domain_form = reduxForm({
+//     form: 'wizard',
+//     destroyOnUnmount: false,
+//     forceUnregisterOnUnmount: true,
+//     validate
+// })(EditPage);
+
 const mapStateToProps = (state) => {
 	// const { text, type } = state.feedback;
 	// return { type, text };

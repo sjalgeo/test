@@ -1,11 +1,12 @@
 import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPundits } from '../actions/actions-pundits';
+import { fetchPundits, updatePundit } from '../actions/actions-pundits';
 
 class PunditList extends Component {
 
 	componentWillMount() {
+        this.props.updatePundit();
 		this.props.fetchPundits();
 	}
 
@@ -27,8 +28,8 @@ class PunditList extends Component {
 }
 
 const mapStateToProps = (state) => {
-	const { pundits } = state;
-	return { pundits };
+	const { all } = state.pundits;
+	return { pundits: all };
 };
 
-export default connect( mapStateToProps, { fetchPundits } )( PunditList );
+export default connect( mapStateToProps, { fetchPundits, updatePundit } )( PunditList );

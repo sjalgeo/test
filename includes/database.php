@@ -68,7 +68,8 @@ class Database {
 		$all = $this->get_last_result();
 
 		foreach ($all as $key => $row) {
-			if ( isset($row['id']) AND intval($row['id']) === $id ) {
+			// Force both to integers. TODO -notes
+			if ( isset($row['id']) AND intval($row['id']) === intval($id) ) {
 				unset($all[$key]);
 			}
 		}
