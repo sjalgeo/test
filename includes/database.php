@@ -5,6 +5,7 @@ namespace SBTechTest;
 class Database {
 
 	private $last_result = null;
+	private $last_id = null;
 
 	public function __construct($root_directory) {
 		$this->root_directory = $root_directory;
@@ -18,6 +19,25 @@ class Database {
 	public function fetchAll( $table ) {
 		$data =  file_get_contents( $this->root_directory . '/' . $table . '.json' );
 		$this->last_result = json_decode($data, true);
+	}
+
+	public function create( $table, $data ) {
+		$this->fetchAll( $table );
+		$all_pundits =  $this->get_last_result();
+
+		$ids = array_map( function ( $pundit ) {
+			return $pundit['id'];
+		}, $all_pundits);
+
+		$max = max( $ids );
+		$new_id = ++$max;
+
+		$new_pundit = array_merge( array( 'id' => $new_id ), $data );
+		$all_pundits[] = $new_pundit;
+
+		$this->last_id = $new_id;
+
+		$this->commit( $table, $all_pundits );
 	}
 
 	public function fetch( $table, $id ) {
@@ -84,5 +104,9 @@ class Database {
 
 	public function get_last_result() {
 		return $this->last_result;
+	}
+
+	public function get_last_id() {
+		return $this->last_id;
 	}
 }

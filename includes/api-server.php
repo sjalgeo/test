@@ -35,6 +35,19 @@ class API_Server {
 		);
 	}
 
+	protected function pundits_create() {
+
+		$data = array(
+			'firstname' => $_POST['firstname'],
+			'surname'   => $_POST['surname']
+		);
+
+		$this->db->create( 'pundits', $data );
+		$this->response = array(
+			'status'    => 'success',
+		);
+	}
+
 	protected function pundits_delete() {
 
 		if ( ! isset($_POST['id'] ) ) {
@@ -50,7 +63,6 @@ class API_Server {
 
 		// do some safety shit.
 		$id = $_POST['id'];
-
 		$this->db->delete('pundits', $id);
 
 		$this->response = array(
@@ -61,11 +73,17 @@ class API_Server {
 	protected function pundits_update() {
 		// do some safety shit.
 
+		$id = intval( $_POST['id'] );
+		$data = array(
+			'firstname' => $_POST['firstname'],
+			'surname'   => $_POST['surname']
+		);
 
-
-		$id = $_POST['id'];
-		$data = $_POST['data'];
 		$this->db->update('pundits', $id, $data);
+
+		$this->response = array(
+			'status'    => 'success'
+		);
 	}
 
 	/**
@@ -101,7 +119,7 @@ class API_Server {
 				$this->pundits_delete();
 				break;
 			case 'create':
-//				$this->pundits_list();
+				$this->pundits_create();
 				break;
 			default:
 				$this->failure_response();
@@ -111,8 +129,6 @@ class API_Server {
 	}
 
 	public function output() {
-//		header("HTTP/1.0 404 Not Found"); TODO - http status codes?
-
 		header('Content-Type: application/json');
 		echo json_encode( $this->response );
 		exit;

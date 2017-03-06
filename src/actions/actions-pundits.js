@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-const ROOT_URL = 'http://localhost:8080/api.php/pundits';
-
 export const FETCH_PUNDITS = 'FETCH_PUNDITS';
 
 export const fetchPundits = () => {
 
+	console.log('fetch');
+
+	const ROOT_URL = 'http://localhost:8080/api.php/list';
 	const request = axios.get( ROOT_URL );
 
 	return {
@@ -16,12 +17,60 @@ export const fetchPundits = () => {
 
 export const UPDATE_PUNDIT = 'UPDATE_PUNDIT';
 
-export const updatePundit = () => {
+export const updatePundit = ( data ) => {
 
-    const request = axios.patch( ROOT_URL, { id: 3, 'firstname': 'Andy'} );
+	let form = new FormData();
+	form.append('id', data.id);
+	form.append('firstname', data.firstname);
+	form.append('surname', data.surname);
+
+	const ROOT_URL = 'http://localhost:8080/api.php/update';
+    const request = axios.post( ROOT_URL, form );
 
     return {
         type: UPDATE_PUNDIT,
         payload: request
     };
+};
+
+export const DELETE_PUNDIT = 'DELETE_PUNDIT';
+
+export const deletePundit = ( id ) => {
+
+	let form = new FormData();
+	form.append('id', id);
+
+	const ROOT_URL = 'http://localhost:8080/api.php/delete';
+	const request = axios.post( ROOT_URL, form );
+
+	return {
+		type: DELETE_PUNDIT,
+		payload: request
+	};
+};
+
+export const CREATE_PUNDIT = 'CREATE_PUNDIT';
+
+export const createPundit = ( data ) => {
+
+	let form = new FormData();
+	form.append('firstname', data.firstname);
+	form.append('surname', data.surname);
+
+	const ROOT_URL = 'http://localhost:8080/api.php/create';
+	const request = axios.post( ROOT_URL, form );
+
+	return {
+		type: CREATE_PUNDIT,
+		payload: request
+	};
+};
+
+export const SELECT_PUNDIT = 'SELECT_PUNDIT';
+
+export const selectPundit = ( id ) => {
+	return {
+		type: SELECT_PUNDIT,
+		payload: id
+	};
 };

@@ -1,28 +1,57 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchPundits, updatePundit } from '../actions/actions-pundits';
+import { fetchPundits, updatePundit, selectPundit, deletePundit } from '../actions/actions-pundits';
+import { Link } from 'react-router';
 
 class PunditList extends Component {
 
+	static contextTypes = {
+		router: PropTypes.object
+	};
+
+	constructor() {
+		super();
+		this.renderRow = this.renderRow.bind(this);
+		this.editPundit = this.editPundit.bind(this);
+		this.deletePundit = this.deletePundit.bind(this);
+	}
+
 	componentWillMount() {
-        this.props.updatePundit();
 		this.props.fetchPundits();
 	}
 
-	renderPundits() {
-		const rows = (pundit, key) => <tr key={key}><td>{pundit.firstname + ' ' + pundit.surname}</td></tr>
+	editPundit( id ) {
+		this.props.selectPundit(id);
+		this.context.router.push('edit/' + id );
+	}
 
-		return this.props.pundits.map(rows)
+	deletePundit( id ) {
+		this.props.deletePundit(id)
+		  .then( this.props.fetchPundits );
+	}
+
+	renderRow( pundit, key ) {
+		return <tr key={key}>
+			<td>{pundit.firstname + ' ' + pundit.surname}</td>
+			<td><button onClick={this.editPundit.bind(null, pundit.id)}>Edit</button> </td>
+			<td><button onClick={this.deletePundit.bind(null, pundit.id)}>Delete</button> </td>
+		</tr>
+	};
+
+	renderPundits() {
+		return this.props.pundits.map( this.renderRow )
 	}
 
 	render() {
 		return <div>
+			<span>These are the pundits...</span>
 			<table>
 				<tbody>
 				{this.renderPundits()}
 				</tbody>
 			</table>
+
+			<Link to="add">Add New Pundit</Link>
 		</div>
 	}
 }
@@ -32,4 +61,4 @@ const mapStateToProps = (state) => {
 	return { pundits: all };
 };
 
-export default connect( mapStateToProps, { fetchPundits, updatePundit } )( PunditList );
+export default connect( mapStateToProps, { fetchPundits, updatePundit, selectPundit, deletePundit } )( PunditList );
