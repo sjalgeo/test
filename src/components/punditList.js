@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchPundits, updatePundit, selectPundit, deletePundit, resetPundits } from '../actions/actions-pundits';
+import { fetchPundits, updatePundit, selectPundit, deletePundit, resetPundits } from '../actions/punditActions';
 import { Link } from 'react-router';
 
 class PunditList extends Component {

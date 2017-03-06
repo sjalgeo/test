@@ -4,7 +4,7 @@ const REMOTE_SCRIPTS_DIR = './public/scripts';
 
 module.exports = {
 	entry: [
-		'./src/App.js'
+		'./src/app.js'
 	],
 	devtool: process.env.WEBPACK_DEVTOOL || 'cheap-module-source-map',
 	output: {

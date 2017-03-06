@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { updatePundit } from '../actions/actions-pundits';
+import { updatePundit } from '../actions/punditActions';
 import { Link } from 'react-router';
 import validate from './validate';
 import renderField from './renderField';

@@ -1,4 +1,4 @@
-import { FETCH_PUNDITS, SELECT_PUNDIT } from '../actions/actions-pundits';
+import { FETCH_PUNDITS, SELECT_PUNDIT } from '../actions/punditActions';
 
 const INITIAL_STATE = {
     all: [],
