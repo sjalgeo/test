@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchPundits, updatePundit, selectPundit, deletePundit } from '../actions/actions-pundits';
+import { fetchPundits, updatePundit, selectPundit, deletePundit, resetPundits } from '../actions/actions-pundits';
 import { Link } from 'react-router';
 
 class PunditList extends Component {
@@ -14,6 +14,7 @@ class PunditList extends Component {
 		this.renderRow = this.renderRow.bind(this);
 		this.editPundit = this.editPundit.bind(this);
 		this.deletePundit = this.deletePundit.bind(this);
+		this.resetPundits = this.resetPundits.bind(this);
 	}
 
 	componentWillMount() {
@@ -27,6 +28,11 @@ class PunditList extends Component {
 
 	deletePundit( id ) {
 		this.props.deletePundit(id)
+		  .then( this.props.fetchPundits );
+	}
+
+	resetPundits() {
+		this.props.resetPundits()
 		  .then( this.props.fetchPundits );
 	}
 
@@ -52,6 +58,7 @@ class PunditList extends Component {
 			</table>
 
 			<Link to="add">Add New Pundit</Link>
+			<button onClick={this.resetPundits}>Reset to Default</button>
 		</div>
 	}
 }
@@ -61,4 +68,4 @@ const mapStateToProps = (state) => {
 	return { pundits: all };
 };
 
-export default connect( mapStateToProps, { fetchPundits, updatePundit, selectPundit, deletePundit } )( PunditList );
+export default connect( mapStateToProps, { resetPundits, fetchPundits, updatePundit, selectPundit, deletePundit } )( PunditList );

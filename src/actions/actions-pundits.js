@@ -4,8 +4,6 @@ export const FETCH_PUNDITS = 'FETCH_PUNDITS';
 
 export const fetchPundits = () => {
 
-	console.log('fetch');
-
 	const ROOT_URL = 'http://localhost:8080/api.php/list';
 	const request = axios.get( ROOT_URL );
 
@@ -62,6 +60,19 @@ export const createPundit = ( data ) => {
 
 	return {
 		type: CREATE_PUNDIT,
+		payload: request
+	};
+};
+
+export const RESET_PUNDITS = 'RESET_PUNDITS';
+
+export const resetPundits = ( data ) => {
+
+	const ROOT_URL = 'http://localhost:8080/api.php/reset';
+	const request = axios.post( ROOT_URL );
+
+	return {
+		type: RESET_PUNDITS,
 		payload: request
 	};
 };

@@ -79,7 +79,15 @@ class API_Server {
 			'surname'   => $_POST['surname']
 		);
 
-		$this->db->update('pundits', $id, $data);
+		$this->db->update( 'pundits', $id, $data );
+
+		$this->response = array(
+			'status'    => 'success'
+		);
+	}
+
+	protected function pundits_reset() {
+		$this->db->reset();
 
 		$this->response = array(
 			'status'    => 'success'
@@ -109,18 +117,27 @@ class API_Server {
 		}
 
 		switch ( $this->endpoint ) {
+
 			case 'list':
 				$this->pundits_list();
 				break;
+
 			case 'update':
 				$this->pundits_update();
 				break;
+
 			case 'delete':
 				$this->pundits_delete();
 				break;
+
 			case 'create':
 				$this->pundits_create();
 				break;
+
+			case 'reset':
+				$this->pundits_reset();
+				break;
+
 			default:
 				$this->failure_response();
 		}
