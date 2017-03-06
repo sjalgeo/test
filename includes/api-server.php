@@ -37,9 +37,14 @@ class API_Server {
 
 	protected function pundits_create() {
 
+		if ( ! isset( $_POST['firstname'] ) OR ! isset( $_POST['surname'] ) ) {
+			$this->failure_response();
+			return;
+		}
+
 		$data = array(
-			'firstname' => $_POST['firstname'],
-			'surname'   => $_POST['surname']
+			'firstname' => htmlspecialchars( $_POST['firstname'] ),
+			'surname'   => htmlspecialchars( $_POST['surname'] )
 		);
 
 		$this->db->create( 'pundits', $data );
@@ -62,7 +67,7 @@ class API_Server {
 		}
 
 		// do some safety shit.
-		$id = $_POST['id'];
+		$id = intval( $_POST['id'] );
 		$this->db->delete('pundits', $id);
 
 		$error = $this->db->get_last_error();
@@ -84,8 +89,8 @@ class API_Server {
 
 		$id = intval( $_POST['id'] );
 		$data = array(
-			'firstname' => $_POST['firstname'],
-			'surname'   => $_POST['surname']
+			'firstname' => htmlspecialchars( $_POST['firstname'] ),
+			'surname'   => htmlspecialchars( $_POST['surname'] )
 		);
 
 		$this->db->update( 'pundits', $id, $data );
