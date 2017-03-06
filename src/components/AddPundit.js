@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { createPundit } from '../actions/actions-pundits';
 import { Link } from 'react-router';
+import validate from './validate';
+import renderField from './renderField';
 
 class AddPunditForm extends Component {
 
@@ -21,29 +23,25 @@ class AddPunditForm extends Component {
 
 		const { handleSubmit, pristine, submitting } = this.props;
 
-		return <div>
+		return <div className="row">
+
+			<h1>Add New Pundit</h1>
 			<form onSubmit={handleSubmit(this.handleSubmit)}>
 
-				<div>
-					<label htmlFor="firstname">First Name</label>
-					<Field name="firstname" component="input" type="text"/>
-				</div>
-				<div>
-					<label htmlFor="surname">Last Name</label>
-					<Field name="surname" component="input" type="text"/>
-				</div>
+					<Field label="First Name" name="firstname" component={renderField} type="text"/>
+					<Field label="Surname" name="surname" component={renderField} type="text"/>
 
-				<button type="submit" disabled={pristine || submitting}>Add New Pundit</button>
+				<button className="btn btn-primary" type="submit" disabled={pristine || submitting}>Add New Pundit</button>
 			</form>
 
-			<Link to="/">Back to Pundits</Link>
+			<Link className="btn btn-outline-info" to="/">Back to Pundits</Link>
 		</div>
 	}
 }
 
 let addPunditForm = reduxForm({
     form: 'AddPunditForm',
-    // validate
+    validate
 })(AddPunditForm);
 
 export default connect( null, { createPundit } )( addPunditForm );

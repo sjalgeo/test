@@ -65,9 +65,18 @@ class API_Server {
 		$id = $_POST['id'];
 		$this->db->delete('pundits', $id);
 
-		$this->response = array(
-			'status'    => 'success'
-		);
+		$error = $this->db->get_last_error();
+
+		if ( $error ) {
+			$this->response = array(
+				'status'    => 'failed',
+				'code'      => $error
+			);
+		} else {
+			$this->response = array(
+				'status'    => 'success'
+			);
+		}
 	}
 
 	protected function pundits_update() {

@@ -19,8 +19,8 @@ export const updatePundit = ( data ) => {
 
 	let form = new FormData();
 	form.append('id', data.id);
-	form.append('firstname', data.firstname);
-	form.append('surname', data.surname);
+	form.append('firstname', data.firstname.trim());
+	form.append('surname', data.surname.trim());
 
 	const ROOT_URL = 'http://localhost:8080/api.php/update';
     const request = axios.post( ROOT_URL, form );
@@ -52,8 +52,8 @@ export const CREATE_PUNDIT = 'CREATE_PUNDIT';
 export const createPundit = ( data ) => {
 
 	let form = new FormData();
-	form.append('firstname', data.firstname);
-	form.append('surname', data.surname);
+	form.append('firstname', data.firstname.trim());
+	form.append('surname', data.surname.trim());
 
 	const ROOT_URL = 'http://localhost:8080/api.php/create';
 	const request = axios.post( ROOT_URL, form );

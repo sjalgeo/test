@@ -38,9 +38,13 @@ class PunditList extends Component {
 
 	renderRow( pundit, key ) {
 		return <tr key={key}>
-			<td>{pundit.firstname + ' ' + pundit.surname}</td>
-			<td><button onClick={this.editPundit.bind(null, pundit.id)}>Edit</button> </td>
-			<td><button onClick={this.deletePundit.bind(null, pundit.id)}>Delete</button> </td>
+			<td>
+				<h3>{pundit.firstname + ' ' + pundit.surname}</h3>
+				</td>
+			<td>
+				<button className="btn btn-danger pull-right" onClick={this.deletePundit.bind(null, pundit.id)}>Delete</button>
+				<button className="btn btn-warning pull-right" onClick={this.editPundit.bind(null, pundit.id)}>Edit</button>
+		  	</td>
 		</tr>
 	};
 
@@ -50,15 +54,20 @@ class PunditList extends Component {
 
 	render() {
 		return <div>
-			<span>These are the pundits...</span>
-			<table>
+			<table className="table table-responsive">
+				<thead className="thead-default">
+					<tr>
+						<th><h2>Name</h2></th>
+						<th><h2 className="pull-right">Actions</h2></th>
+					</tr>
+				</thead>
 				<tbody>
 				{this.renderPundits()}
 				</tbody>
 			</table>
 
-			<Link to="add">Add New Pundit</Link>
-			<button onClick={this.resetPundits}>Reset to Default</button>
+			<Link className="btn btn-primary" to="add">Add New Pundit</Link>
+			<button className="btn btn-danger" onClick={this.resetPundits}>Reset to Default</button>
 		</div>
 	}
 }
